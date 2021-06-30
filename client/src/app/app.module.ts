@@ -14,6 +14,7 @@ import { AuthLayoutComponent } from './shared/layouts/auth-layout/auth-layout.co
 import { MainLayoutComponent } from './shared/layouts/main-layout/main-layout.component';
 import { MainPageComponent } from './components/main-block/main-page/main-page.component';
 import {AuthInterceptor} from "./shared/auth.interceptor";
+import { CalendarComponent } from './components/main-block/calendar/calendar.component';
 
 const INTERCEPT_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -29,7 +30,8 @@ const INTERCEPT_PROVIDER: Provider = {
     RegisterPageComponent,
     AuthLayoutComponent,
     MainLayoutComponent,
-    MainPageComponent
+    MainPageComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,

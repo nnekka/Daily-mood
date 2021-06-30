@@ -2,11 +2,11 @@
   <mat-sidenav #sidenav class="mat-elevation-z8" mode="side" opened="true">
     <img
       class="avatar mat-elevation-z8"
-      src="https://i.ytimg.com/vi/1Ne1hqOXKKI/maxresdefault.jpg"
+      [src]="user.avatar"
     >
 
-    <h4 class="name">Username</h4>
-    <p class="designation">Smth</p>
+    <h4 class="name">{{ user.name }}</h4>
+    <p class="designation">Количество календарей: </p>
 
     <mat-divider></mat-divider>
     <button

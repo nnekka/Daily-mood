@@ -18,6 +18,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatInputModule} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   exports: [
@@ -41,7 +42,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     MatPaginatorModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatTooltipModule
   ]
 })
 export class AngularMaterialModule {}

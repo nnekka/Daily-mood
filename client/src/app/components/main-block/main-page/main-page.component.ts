@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params} from "@angular/router";
 import {MaterialService} from "../../../shared/material.service";
+import {AuthService} from "../../auth-block/auth.service";
 
 @Component({
   selector: 'app-main-page',
@@ -9,13 +10,30 @@ import {MaterialService} from "../../../shared/material.service";
 })
 export class MainPageComponent implements OnInit {
 
+  folders = [
+    {
+      name: 'Photos',
+      updated: new Date('1/1/16'),
+    },
+    {
+      name: 'Recipes',
+      updated: new Date('1/17/16'),
+    },
+    {
+      name: 'Work',
+      updated: new Date('1/28/16'),
+    }
+  ];
+
   constructor(
     private route: ActivatedRoute,
-    private material: MaterialService
+    private material: MaterialService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
     this.getParams();
+
   }
 
   private getParams(){
@@ -27,5 +45,4 @@ export class MainPageComponent implements OnInit {
       }
     )
   }
-
 }

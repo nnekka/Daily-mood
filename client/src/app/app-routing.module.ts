@@ -6,6 +6,7 @@ import {LoginPageComponent} from "./components/auth-block/login-page/login-page.
 import {RegisterPageComponent} from "./components/auth-block/register-page/register-page.component";
 import {MainPageComponent} from "./components/main-block/main-page/main-page.component";
 import {AuthGuard} from "./shared/auth.guard";
+import {CalendarComponent} from "./components/main-block/calendar/calendar.component";
 
 const routes: Routes = [
   {
@@ -17,7 +18,8 @@ const routes: Routes = [
   },
   {
     path: '', component: MainLayoutComponent, canActivate: [AuthGuard], children: [
-      { path: 'main-page', component: MainPageComponent }
+      { path: 'main-page', component: MainPageComponent },
+      { path: 'calendar/:id', component: CalendarComponent },
     ]
   }
 ];

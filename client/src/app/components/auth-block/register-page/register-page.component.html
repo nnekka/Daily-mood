@@ -40,38 +40,38 @@
           <mat-error *ngIf="form.get('password').invalid">Password is required</mat-error>
         </mat-form-field>
       </p>
-      <!--<p>-->
-        <!--<mat-form-field>-->
-          <!--<input-->
-            <!--type="file"-->
-            <!--class="display-none"-->
-            <!--(change)="onFileUpload($event)"-->
-            <!--#input-->
-          <!--&gt;-->
-          <!--<input-->
-            <!--type="text"-->
-            <!--matInput-->
-            <!--placeholder="Avatar"-->
-            <!--formControlName="avatar"-->
-            <!--name="image"-->
-          <!--&gt;-->
+      <p>
+        <mat-form-field>
+          <input
+            type="file"
+            class="display-none"
+            (change)="onFileUpload($event)"
+            #input
+          >
+          <input
+            type="text"
+            matInput
+            placeholder="Avatar"
+            formControlName="avatar"
+            name="image"
+          >
 
-          <!--<mat-error *ngIf="form.get('email').invalid">Введите email</mat-error>-->
-        <!--</mat-form-field>-->
-        <!--<button-->
-          <!--(click)="triggerClick()"-->
-          <!--type="button"-->
-          <!--mat-button-->
-        <!--&gt;-->
-          <!--Загрузить изображение-->
-        <!--</button>-->
+          <mat-error *ngIf="form.get('email').invalid">Введите email</mat-error>
+        </mat-form-field>
+        <button
+          (click)="triggerClick()"
+          type="button"
+          mat-button
+        >
+          Загрузить изображение
+        </button>
 
-        <!--<img-->
-          <!--*ngIf="imagePreview"-->
-          <!--[src]="imagePreview"-->
-          <!--[style]="{'height': '100px', 'width': '150px'}"-->
-        <!--&gt;-->
-      <!--</p>-->
+        <img
+          *ngIf="imagePreview"
+          [src]="imagePreview"
+          [style]="{'height': '100px', 'width': '150px'}"
+        >
+      </p>
 
 
       <div class="button">

@@ -39,6 +39,9 @@ export class LoginPageComponent implements OnInit {
         if (params['accessDenied'] || params['sessionFailed']){
           this.material.showMessage('Залогиньтесь для этого действия');
         }
+        if (params['registered']){
+          this.material.showMessage(params['message']);
+        }
       }
     )
   }

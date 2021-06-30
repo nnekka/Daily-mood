@@ -1,0 +1,39 @@
+const express = require('express')
+const multer = require('multer')
+const moment = require('moment')
+const router = express.Router()
+
+const storage = multer.diskStorage({
+    destination(req, file, cb){
+        cb(null, 'uploads/' )
+    },
+    filename(req, file, cb){
+        const date = moment().format('DDMMYYYY-hhmmss-SSS')
+        cb(null, `${date}-${file.originalname}`)
+    }
+})
+
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/png' || file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg'){
+        cb(null, true)
+    } else {
+        cb(null, false)
+    }
+}
+
+const limits = {
+    fileSize: 1024 * 1024 * 5
+}
+
+const upload = multer({
+    storage,
+    fileFilter,
+    limits
+})
+
+router.post('/', upload.single('image'), (req, res) => {
+    res.json({image: `${req.file.path}`}) //<= ангуляр не понимает строки, потому надо посылать объект
+})
+
+module.exports = router
+

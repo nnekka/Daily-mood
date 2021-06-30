@@ -56,8 +56,8 @@ export class AuthService {
     )
   }
 
-  register(){
-
+  register(user: User): Observable<{message: string}>{
+    return this.http.post<{message: string}>('/api/users/register', user)
   }
 
   getUserById(){

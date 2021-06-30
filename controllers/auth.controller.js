@@ -61,13 +61,8 @@ module.exports.register = async (req, res) => {
             avatar
         })
         await user.save();
-        const token = generateToken(user._id);
         res.status(201).json({
-            id: user._id,
-            name: user.name,
-            email: user.email,
-            avatar: user.avatar,
-            token: `Bearer ${token}`
+            message: 'Вы успешно зарегистировались. Войдите теперь со своими данными'
         })
     }
 

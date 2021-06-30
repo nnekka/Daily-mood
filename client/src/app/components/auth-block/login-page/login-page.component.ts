@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../auth.service";
 import {User} from "../../../shared/interfaces";
 import {MaterialService} from "../../../shared/material.service";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 
 @Component({
   selector: 'app-login-page',
@@ -15,11 +16,14 @@ export class LoginPageComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private material: MaterialService
+    private material: MaterialService,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.initForm();
+    this.getParams();
   }
 
   private initForm(){
@@ -29,12 +33,27 @@ export class LoginPageComponent implements OnInit {
     })
   }
 
+  private getParams(){
+    this.route.queryParams.subscribe(
+      (params: Params) => {
+        if (params['accessDenied'] || params['sessionFailed']){
+          this.material.showMessage('Залогиньтесь для этого действия');
+        }
+      }
+    )
+  }
+
   onSubmit(){
     this.authService.login(this.form.value).subscribe(
       (user: User) => {
-        console.log(user)
+        this.router.navigate(['/main-page'], {
+          queryParams: {
+            logged: true,
+            user: user.name
+          }
+        })
       },
-      error => console.log(error)
+      error => this.material.showMessage(error.error.errors[0].msg)
     )
   }
 

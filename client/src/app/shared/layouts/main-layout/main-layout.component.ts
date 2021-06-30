@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {MatSidenav} from "@angular/material/sidenav";
+import {BreakpointObserver} from "@angular/cdk/layout";
+import {AuthService} from "../../../components/auth-block/auth.service";
 
 @Component({
   selector: 'app-main-layout',
@@ -7,9 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainLayoutComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild('sidenav') sidenav: MatSidenav;
+
+  show = true;
+
+  constructor(
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
   }
 
+  toggleSidebar() {
+    this.sidenav.toggle()
+  }
+
+  onLogout() {
+    this.authService.logout();
+  }
 }

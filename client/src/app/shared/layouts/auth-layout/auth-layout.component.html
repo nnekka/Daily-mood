@@ -1,0 +1,18 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button mat-icon-button routerLink="/">
+      <mat-icon class="mat-icon-rtl-mirror">calendar_today</mat-icon>
+    </button>
+    <h1>DAILY MOOD</h1>
+    <span class="menu-spacer"></span>
+    <div style="margin-left: auto;">
+      <a mat-button routerLink="/login"> Login </a>
+      <a mat-button routerLink="/register"> Create Account </a>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
+

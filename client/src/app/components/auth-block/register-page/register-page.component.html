@@ -1,0 +1,92 @@
+<mat-card>
+  <mat-card-title>Sign Up to use calendars</mat-card-title>
+  <mat-card-content>
+    <form
+      [formGroup]="form"
+      (submit)="onSubmit()"
+    >
+      <p>
+        <mat-form-field>
+          <input
+            type="text"
+            matInput
+            placeholder="Name"
+            formControlName="name"
+          >
+          <mat-error *ngIf="form.get('name').invalid">Name is required</mat-error>
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field>
+          <input
+            type="email"
+            matInput
+            placeholder="Email"
+            formControlName="email"
+          >
+          <mat-error *ngIf="form.get('email').invalid">Email is required</mat-error>
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field>
+          <input
+            type="password"
+            matInput
+            placeholder="Password"
+            formControlName="password"
+          >
+          <mat-error *ngIf="form.get('password').invalid">Password is required</mat-error>
+        </mat-form-field>
+      </p>
+      <!--<p>-->
+        <!--<mat-form-field>-->
+          <!--<input-->
+            <!--type="file"-->
+            <!--class="display-none"-->
+            <!--(change)="onFileUpload($event)"-->
+            <!--#input-->
+          <!--&gt;-->
+          <!--<input-->
+            <!--type="text"-->
+            <!--matInput-->
+            <!--placeholder="Avatar"-->
+            <!--formControlName="avatar"-->
+            <!--name="image"-->
+          <!--&gt;-->
+
+          <!--<mat-error *ngIf="form.get('email').invalid">Введите email</mat-error>-->
+        <!--</mat-form-field>-->
+        <!--<button-->
+          <!--(click)="triggerClick()"-->
+          <!--type="button"-->
+          <!--mat-button-->
+        <!--&gt;-->
+          <!--Загрузить изображение-->
+        <!--</button>-->
+
+        <!--<img-->
+          <!--*ngIf="imagePreview"-->
+          <!--[src]="imagePreview"-->
+          <!--[style]="{'height': '100px', 'width': '150px'}"-->
+        <!--&gt;-->
+      <!--</p>-->
+
+
+      <div class="button">
+        <button
+          type="submit"
+          mat-raised-button
+          color="primary"
+        >
+          Create account
+        </button>
+      </div>
+
+    </form>
+  </mat-card-content>
+</mat-card>
+
+
+

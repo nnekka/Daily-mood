@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CalendarService} from "../../../../shared/services/calendar.service";
 import {debounceTime, distinctUntilChanged, map, switchMap} from "rxjs/operators";
 import {Subscription} from "rxjs/internal/Subscription";
+import {MaterialService} from "../../../../shared/material.service";
 
 
 
@@ -28,7 +29,8 @@ export class CalendarFormComponent implements OnInit, OnDestroy {
   ];
 
   constructor(
-    private calendarService: CalendarService
+    private calendarService: CalendarService,
+    private material: MaterialService
   ) {}
 
   ngOnInit(): void {
@@ -73,7 +75,8 @@ export class CalendarFormComponent implements OnInit, OnDestroy {
       )
       .subscribe(titles => {
         if (titles.includes(this.form.get('title').value)){
-          console.log('Нельзя такой title') // как тут установить ошибку? setErrors переписывает все ошибки
+          this.material.showMessage(`${this.form.get('title').value} is already taken`)
+          this.form.get('title').setErrors({none: true})
         }
       });
   }

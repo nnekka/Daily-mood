@@ -24,6 +24,13 @@ export class LoginPageComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.getParams();
+    this.authService.loggedUser.subscribe(
+      (user: User) => {
+        if (user){
+          this.router.navigate(['/main-page']);
+        }
+      }
+    )
   }
 
   private initForm(){

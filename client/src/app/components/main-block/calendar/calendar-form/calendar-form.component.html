@@ -1,0 +1,77 @@
+
+
+<div>
+  <div>
+    <mat-card class="container">
+      <form
+        [formGroup]="form"
+        (submit)="onSubmit()"
+      >
+        <mat-card-title>Создание календаря</mat-card-title>
+
+        <mat-card-content>
+
+          <p>
+            <mat-form-field>
+
+              <input
+                matInput
+                type="text"
+                placeholder="Title*"
+                formControlName="title"
+              >
+                <mat-error *ngIf="form.get('title').invalid">Title is required</mat-error>
+            </mat-form-field>
+          </p>
+
+          <p>
+            <mat-form-field>
+              <input
+                matInput
+                type="text"
+                placeholder="Description"
+                formControlName="description"
+              >
+            </mat-form-field>
+          </p>
+
+          <p>
+            <mat-form-field>
+              <input
+                matInput
+                type="number"
+                placeholder="Year*"
+                formControlName="year"
+              >
+            </mat-form-field>
+            <mat-error *ngIf="form.get('year').invalid">Year is required</mat-error>
+          </p>
+
+          <p>
+            <mat-radio-group>
+              <label class="text-center">Тип легенды:</label>
+              <mat-radio-button
+                *ngFor="let type of types"
+                [value]="type.type"
+                formGroupName="legendType"
+                (change)="onChangeRadio(type.type)"
+              >
+                {{type.text}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </p>
+
+        </mat-card-content>
+        <mat-card-actions class="button">
+          <button
+            mat-raised-button color="primary"
+            type="submit"
+            [disabled]="form.invalid"
+          >
+            Create
+          </button>
+        </mat-card-actions>
+      </form>
+    </mat-card>
+  </div>
+</div>

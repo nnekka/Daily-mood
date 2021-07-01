@@ -12,7 +12,7 @@ module.exports.getCalendars = async (req, res) => {
     const calendars = await Calendar.find({
         user: req.user.id
     });
-    res.json(calendars);
+    res.json([]);
 }
 
 module.exports.getCalendarById = async (req, res) => {

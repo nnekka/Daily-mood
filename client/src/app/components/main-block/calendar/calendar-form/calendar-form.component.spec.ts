@@ -1,22 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoginPageComponent } from './login-page.component';
-import {AuthService} from "../auth.service";
+import { CalendarFormComponent } from './calendar-form.component';
 
-describe('LoginPageComponent', () => {
-  let component: LoginPageComponent;
-  let fixture: ComponentFixture<LoginPageComponent>;
-
+describe('CalendarFormComponent', () => {
+  let component: CalendarFormComponent;
+  let fixture: ComponentFixture<CalendarFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoginPageComponent ]
+      declarations: [ CalendarFormComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginPageComponent);
+    fixture = TestBed.createComponent(CalendarFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

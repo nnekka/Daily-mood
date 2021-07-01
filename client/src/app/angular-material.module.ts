@@ -19,6 +19,8 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatInputModule} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatRadioModule} from "@angular/material/radio";
 
 @NgModule({
   exports: [
@@ -43,7 +45,10 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     MatDatepickerModule,
     MatNativeDateModule,
     BrowserAnimationsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatCheckboxModule,
+    MatRadioModule
+
   ]
 })
 export class AngularMaterialModule {}

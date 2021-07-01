@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params} from "@angular/router";
 import {MaterialService} from "../../../shared/material.service";
 import {AuthService} from "../../auth-block/auth.service";
+import {Calendar} from "../../../shared/interfaces";
+import {CalendarService} from "../../../shared/services/calendar.service";
+import {Observable} from "rxjs/internal/Observable";
 
 @Component({
   selector: 'app-main-page',
@@ -10,6 +13,7 @@ import {AuthService} from "../../auth-block/auth.service";
 })
 export class MainPageComponent implements OnInit {
 
+  calendars$: Observable<Calendar[]>;
   folders = [
     {
       name: 'Photos',
@@ -28,12 +32,13 @@ export class MainPageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private material: MaterialService,
-    private authService: AuthService
+    private authService: AuthService,
+    private calendarService: CalendarService,
   ) { }
 
   ngOnInit(): void {
     this.getParams();
-
+    this.getCalendars();
   }
 
   private getParams(){
@@ -44,5 +49,9 @@ export class MainPageComponent implements OnInit {
         }
       }
     )
+  }
+
+  getCalendars(){
+    this.calendars$ = this.calendarService.fetch()
   }
 }

@@ -15,11 +15,19 @@ import { MainLayoutComponent } from './shared/layouts/main-layout/main-layout.co
 import { MainPageComponent } from './components/main-block/main-page/main-page.component';
 import {AuthInterceptor} from "./shared/auth.interceptor";
 import { CalendarComponent } from './components/main-block/calendar/calendar.component';
+import { StylesDirective } from './directives/styles.directive';
+import { CalendarFormComponent } from './components/main-block/calendar/calendar-form/calendar-form.component';
+import {MAT_RADIO_DEFAULT_OPTIONS} from "@angular/material/radio";
 
 const INTERCEPT_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
   useClass: AuthInterceptor,
   multi: true
+}
+
+const RADIO_BUTTON_PROVIDER: Provider = {
+  provide: MAT_RADIO_DEFAULT_OPTIONS,
+  useValue: { color: 'primary' }
 }
 
 @NgModule({
@@ -31,7 +39,9 @@ const INTERCEPT_PROVIDER: Provider = {
     AuthLayoutComponent,
     MainLayoutComponent,
     MainPageComponent,
-    CalendarComponent
+    CalendarComponent,
+    StylesDirective,
+    CalendarFormComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +52,10 @@ const INTERCEPT_PROVIDER: Provider = {
     AngularMaterialModule,
     HttpClientModule
   ],
-  providers: [INTERCEPT_PROVIDER],
+  providers: [
+    INTERCEPT_PROVIDER,
+    RADIO_BUTTON_PROVIDER
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

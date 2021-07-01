@@ -1,37 +1,63 @@
-<mat-list class="container">
-  <div mat-header-row>Calendars</div>
-  <mat-list-item *ngFor="let folder of folders">
-    <mat-icon mat-list-icon>folder</mat-icon>
-    <div mat-line>Title</div>
-    <div mat-line> Описание </div>
 
-    <div mat-column class="list-item-1">
-      <a
-        mat-button
-        matTooltip="Edit calendar"
-        matTooltipPosition="below"
-      >
-        <mat-icon mat-list-icon>edit</mat-icon>
-      </a>
-    </div>
-    <div mat-column class="list-item-2">
-      <a
-        mat-button
-        matTooltip="Statistics"
-        matTooltipPosition="below"
-      >
-        <mat-icon mat-list-icon>description</mat-icon>
-      </a>
-    </div>
-    <div mat-column class="list-item-3">
-      <a
-        mat-button
-        matTooltip="Delete calendar"
-        matTooltipPosition="below"
-      >
-        <mat-icon mat-list-icon>delete</mat-icon>
-      </a>
-    </div>
-  </mat-list-item>
-  <mat-divider></mat-divider>
-</mat-list>
+<div *ngIf="calendars$ | async as calendars; else loader">
+  <div *ngIf="calendars.length > 0; else empty">
+    <mat-list class="container">
+      <div mat-header-row>Calendars</div>
+      <mat-list-item *ngFor="let folder of folders">
+        <mat-icon mat-list-icon>folder</mat-icon>
+        <div mat-line>Title</div>
+        <div mat-line> Описание </div>
+
+        <div mat-column class="list-item-1">
+          <a
+            mat-button
+            matTooltip="Edit calendar"
+            matTooltipPosition="below"
+          >
+            <mat-icon mat-list-icon>edit</mat-icon>
+          </a>
+        </div>
+        <div mat-column class="list-item-2">
+          <a
+            mat-button
+            matTooltip="Statistics"
+            matTooltipPosition="below"
+          >
+            <mat-icon mat-list-icon>description</mat-icon>
+          </a>
+        </div>
+        <div mat-column class="list-item-3">
+          <a
+            mat-button
+            matTooltip="Delete calendar"
+            matTooltipPosition="below"
+          >
+            <mat-icon mat-list-icon>delete</mat-icon>
+          </a>
+        </div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+  </div>
+</div>
+
+<ng-template #loader>
+  <mat-spinner class="container"></mat-spinner>
+</ng-template>
+
+<ng-template #empty>
+  <div class="text-center">
+    У вас еще нет календарей. Хотите создать?
+  </div>
+  <div class="text-center">
+    <button
+      mat-fab
+      color="primary"
+      matTooltip="Конечно создать!"
+      matTooltipPosition="below"
+      routerLink="/calendar/new"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</ng-template>

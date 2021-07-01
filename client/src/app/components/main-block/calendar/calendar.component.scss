@@ -1,0 +1,16 @@
+.calendar-field {
+  margin: 20px;
+  font-size: 10px;
+}
+
+.calendar-row-cell {
+display: flex;
+}
+
+.calendar-cell {
+  border: 1px solid grey;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+}

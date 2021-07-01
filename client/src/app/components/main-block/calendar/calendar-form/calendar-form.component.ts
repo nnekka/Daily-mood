@@ -4,6 +4,9 @@ import {CalendarService} from "../../../../shared/services/calendar.service";
 import {debounceTime, distinctUntilChanged, map, switchMap} from "rxjs/operators";
 import {Subscription} from "rxjs/internal/Subscription";
 import {MaterialService} from "../../../../shared/material.service";
+import {CustomValidator} from "../../../../validators/custom.validator";
+import {Calendar} from "../../../../shared/interfaces";
+import {Router} from "@angular/router";
 
 
 
@@ -15,7 +18,8 @@ import {MaterialService} from "../../../../shared/material.service";
 export class CalendarFormComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
-  unSub: Subscription
+  unSub: Subscription;
+
 
   types = [
     {
@@ -30,8 +34,10 @@ export class CalendarFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private calendarService: CalendarService,
-    private material: MaterialService
-  ) {}
+    private material: MaterialService,
+    private router: Router
+  ) {
+  }
 
   ngOnInit(): void {
     this.initForm();
@@ -39,7 +45,7 @@ export class CalendarFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.unSub){
+    if (this.unSub) {
       this.unSub.unsubscribe();
     }
   }
@@ -48,13 +54,24 @@ export class CalendarFormComponent implements OnInit, OnDestroy {
     this.form = new FormGroup({
       title: new FormControl('', Validators.required),
       description: new FormControl(''),
-      year: new FormControl(2021, Validators.required),
+      year: new FormControl(2021, [Validators.required, CustomValidator.restrictedYears]),
       legendType: new FormControl('', Validators.required)
     })
   }
 
   onSubmit() {
-    console.log(this.form.value)
+    this.form.disable();
+    this.unSub = this.calendarService.createCalendar(this.form.value)
+      .subscribe(
+        (calendar: Calendar) => {
+          this.router.navigate(['/main-page']);
+        },
+        error => {
+          this.material.showMessage(error.error.errors[0].msg);
+          this.form.enable();
+        }
+
+      )
   }
 
   onChangeRadio(type: string) {
@@ -71,12 +88,14 @@ export class CalendarFormComponent implements OnInit, OnDestroy {
         map(form => form['title']),
         distinctUntilChanged(),                 // брать измененные данные
         debounceTime(300),              // отсрочим
-        switchMap(() => {return this.calendarService.fetchTitles()})
+        switchMap(() => {
+          return this.calendarService.fetchTitles()
+        })
       )
       .subscribe(titles => {
-        if (titles.includes(this.form.get('title').value)){
-          this.material.showMessage(`${this.form.get('title').value} is already taken`)
-          this.form.get('title').setErrors({none: true})
+        if (titles.includes(this.form.get('title').value)) {
+          this.material.showMessage(`Title "${this.form.get('title').value}" is already taken. Choose another one.`)
+          this.form.get('title').setErrors({exist: true})
         }
       });
   }

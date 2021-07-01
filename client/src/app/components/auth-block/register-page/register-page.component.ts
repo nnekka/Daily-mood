@@ -1,21 +1,23 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {MaterialService} from "../../../shared/material.service";
 import {AuthService} from "../auth.service";
 import {Router} from "@angular/router";
+import {Subscription} from "rxjs/internal/Subscription";
 
 @Component({
   selector: 'app-register-page',
   templateUrl: './register-page.component.html',
   styleUrls: ['./register-page.component.scss']
 })
-export class RegisterPageComponent implements OnInit {
+export class RegisterPageComponent implements OnInit, OnDestroy {
 
   @ViewChild('input') inputRef: ElementRef;
   form: FormGroup;
   image: string;
   imagePreview: any;
+  unSub: Subscription;
 
   constructor(
     private http: HttpClient,
@@ -25,9 +27,14 @@ export class RegisterPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.initForm()
+    this.initForm();
   }
 
+  ngOnDestroy(): void {
+    if (this.unSub){
+      this.unSub.unsubscribe();
+    }
+  }
   private initForm() {
     this.form = new FormGroup({
       name: new FormControl(null),
@@ -39,7 +46,7 @@ export class RegisterPageComponent implements OnInit {
   }
 
   onSubmit() {
-    this.authService.register(this.form.value).subscribe(
+    this.unSub = this.authService.register(this.form.value).subscribe(
       (response) => {
         this.router.navigate(['/login'], {
           queryParams: {

@@ -4,15 +4,14 @@ const {validationResult} = require('express-validator');
 const {
     error500Handler,
     error400Message,
-    error404Message,
-    error401Message
+    error404Message
 } = require('../utils/errorHandler.js');
 
 module.exports.getCalendars = async (req, res) => {
     const calendars = await Calendar.find({
         user: req.user.id
     });
-    res.json([]);
+    res.json(calendars);
 }
 
 module.exports.getCalendarById = async (req, res) => {

@@ -1,1 +1,21 @@
-<p>calendar works!</p>
+<div *ngIf="calendar" class="container">
+  <h1>{{calendar.title}}</h1>
+
+  <div class="calendar-field">
+
+    <div
+      *ngFor="let month of months"
+      class="calendar-row-cell"
+    >
+      <div
+        *ngFor="let day of days"
+        class="calendar-cell"
+      >
+        <span *ngIf="month === ''">{{day}}</span>
+        <span *ngIf="day === 0">{{month}}</span>
+
+      </div>
+    </div>
+
+  </div>
+</div>

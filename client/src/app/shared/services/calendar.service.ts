@@ -24,4 +24,14 @@ export class CalendarService {
     return this.http.get<string[]>('/api/supporting/title-validator')
   }
 
+  fetchById(id: string): Observable<Calendar>{
+    return this.http.get<Calendar>(`/api/calendars/${id}`)
+  }
+
+  createCalendar(calendar: Calendar): Observable<Calendar>{
+    return this.http.post<Calendar>('/api/calendars', calendar)
+  }
+
+
+
 }

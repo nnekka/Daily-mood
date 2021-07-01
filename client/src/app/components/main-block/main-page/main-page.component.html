@@ -1,12 +1,15 @@
-
 <div *ngIf="calendars$ | async as calendars; else loader">
   <div *ngIf="calendars.length > 0; else empty">
     <mat-list class="container">
-      <div mat-header-row>Calendars</div>
-      <mat-list-item *ngFor="let folder of folders">
+      <div mat-header-row class="m3">Calendars</div>
+      <mat-list-item *ngFor="let calendar of calendars">
         <mat-icon mat-list-icon>folder</mat-icon>
-        <div mat-line>Title</div>
-        <div mat-line> Описание </div>
+        <div mat-line>
+          <a routerLink="/calendar/{{calendar._id}}">
+            {{ calendar.title }}
+          </a>
+        </div>
+        <div mat-line>{{ calendar.description }}</div>
 
         <div mat-column class="list-item-1">
           <a
@@ -46,7 +49,11 @@
 </ng-template>
 
 <ng-template #empty>
-  <div class="text-center">
+  <div
+    class="text-center"
+    [dirStyles]="{color: 'blue'}"
+    appStyles
+  >
     У вас еще нет календарей. Хотите создать?
   </div>
   <div class="text-center">

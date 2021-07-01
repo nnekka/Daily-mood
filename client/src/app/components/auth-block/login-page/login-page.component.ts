@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../auth.service";
 import {User} from "../../../shared/interfaces";
 import {MaterialService} from "../../../shared/material.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
+import {Subscription} from "rxjs/internal/Subscription";
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss']
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
+  unSub: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -31,6 +33,12 @@ export class LoginPageComponent implements OnInit {
         }
       }
     )
+  }
+
+  ngOnDestroy(): void {
+    if (this.unSub){
+      this.unSub.unsubscribe();
+    }
   }
 
   private initForm(){
@@ -54,7 +62,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   onSubmit(){
-    this.authService.login(this.form.value).subscribe(
+    this.unSub = this.authService.login(this.form.value).subscribe(
       (user: User) => {
         this.router.navigate(['/main-page'], {
           queryParams: {

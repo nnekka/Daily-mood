@@ -18,6 +18,7 @@ import { CalendarComponent } from './components/main-block/calendar/calendar.com
 import { StylesDirective } from './directives/styles.directive';
 import { CalendarFormComponent } from './components/main-block/calendar/calendar-form/calendar-form.component';
 import {MAT_RADIO_DEFAULT_OPTIONS} from "@angular/material/radio";
+import {MonthPipe} from "./pipes/month.pipe";
 
 const INTERCEPT_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -41,7 +42,8 @@ const RADIO_BUTTON_PROVIDER: Provider = {
     MainPageComponent,
     CalendarComponent,
     StylesDirective,
-    CalendarFormComponent
+    CalendarFormComponent,
+    MonthPipe
   ],
   imports: [
     BrowserModule,

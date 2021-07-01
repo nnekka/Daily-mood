@@ -8,6 +8,7 @@ import {MainPageComponent} from "./components/main-block/main-page/main-page.com
 import {AuthGuard} from "./shared/auth.guard";
 import {CalendarComponent} from "./components/main-block/calendar/calendar.component";
 import {CalendarFormComponent} from "./components/main-block/calendar/calendar-form/calendar-form.component";
+import {CalendarResolver} from "./components/main-block/calendar/calendar.resolver";
 
 const routes: Routes = [
   {
@@ -21,7 +22,14 @@ const routes: Routes = [
     path: '', component: MainLayoutComponent, canActivate: [AuthGuard], children: [
       { path: 'main-page', component: MainPageComponent },
       { path: 'calendar/new', component: CalendarFormComponent, pathMatch: 'full' },
-      { path: 'calendar/:id', component: CalendarComponent, pathMatch: 'full' }
+      {
+        path: 'calendar/:id',
+        component: CalendarComponent,
+        pathMatch: 'full',
+        resolve: {
+          calendar: CalendarResolver
+        }
+      }
     ]
   }
 ];

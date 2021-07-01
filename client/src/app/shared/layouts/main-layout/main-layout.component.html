@@ -17,6 +17,14 @@
       <mat-icon>home</mat-icon>
       <span>Home</span>
     </button>
+    <button
+      mat-button
+      class="menu-button"
+      routerLink="/calendar/new"
+    >
+      <mat-icon>info</mat-icon>
+      <span>Create calendar</span>
+    </button>
     <button mat-button class="menu-button">
       <mat-icon>person</mat-icon>
       <span>User data</span>
@@ -41,6 +49,7 @@
   <mat-sidenav-content class="mat-elevation-z8">
     <div class="content mat-elevation-z8">
       <div class="menu-row">
+        <button mat-button>Back</button>
         <button mat-button (click)="toggleSidebar()">Show/hide menu</button>
       </div>
       <router-outlet></router-outlet>

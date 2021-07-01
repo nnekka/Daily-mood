@@ -43,8 +43,9 @@
                 placeholder="Year*"
                 formControlName="year"
               >
+              <mat-error *ngIf="form.get('year').invalid">Year is required</mat-error>
             </mat-form-field>
-            <mat-error *ngIf="form.get('year').invalid">Year is required</mat-error>
+
           </p>
 
           <p>

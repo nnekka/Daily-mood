@@ -19,18 +19,26 @@ import { StylesDirective } from './directives/styles.directive';
 import { CalendarFormComponent } from './components/main-block/calendar/calendar-form/calendar-form.component';
 import {MAT_RADIO_DEFAULT_OPTIONS} from "@angular/material/radio";
 import {MonthPipe} from "./pipes/month.pipe";
-
+import { LegendsComponent } from './components/main-block/legends/legends.component';
+import { ColorLegendFormComponent } from './components/main-block/legends/color-legend-form/color-legend-form.component';
+import { ImageLegendFormComponent } from './components/main-block/legends/image-legend-form/image-legend-form.component';
+import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } from '@angular-material-components/color-picker';
+import {LengthPipe} from "./pipes/length.pipe";
 const INTERCEPT_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
   useClass: AuthInterceptor,
   multi: true
-}
+};
 
 const RADIO_BUTTON_PROVIDER: Provider = {
   provide: MAT_RADIO_DEFAULT_OPTIONS,
   useValue: { color: 'primary' }
-}
+};
 
+const COLOR_PICKER_PROVIDER: Provider = {
+  provide: MAT_COLOR_FORMATS,
+  useValue: NGX_MAT_COLOR_FORMATS
+};
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +51,11 @@ const RADIO_BUTTON_PROVIDER: Provider = {
     CalendarComponent,
     StylesDirective,
     CalendarFormComponent,
-    MonthPipe
+    MonthPipe,
+    LegendsComponent,
+    ColorLegendFormComponent,
+    ImageLegendFormComponent,
+    LengthPipe
   ],
   imports: [
     BrowserModule,
@@ -52,11 +64,13 @@ const RADIO_BUTTON_PROVIDER: Provider = {
     AppRoutingModule,
     BrowserAnimationsModule,
     AngularMaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxMatColorPickerModule
   ],
   providers: [
     INTERCEPT_PROVIDER,
-    RADIO_BUTTON_PROVIDER
+    RADIO_BUTTON_PROVIDER,
+    COLOR_PICKER_PROVIDER
   ],
   bootstrap: [AppComponent]
 })

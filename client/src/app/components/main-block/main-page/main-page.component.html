@@ -5,7 +5,12 @@
       <mat-list-item *ngFor="let calendar of calendars">
         <mat-icon mat-list-icon>folder</mat-icon>
         <div mat-line>
-          <a routerLink="/calendar/{{calendar._id}}">
+          <a
+            [routerLink]="calendar.legends.length > 0
+                ? ['/calendar', calendar._id]
+                : ['/legends', calendar.legendType, calendar._id]
+            "
+          >
             {{ calendar.title }}
           </a>
         </div>

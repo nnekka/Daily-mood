@@ -1,0 +1,76 @@
+<div class="container">
+  <mat-card class="text-center">
+    <mat-card-title>Choose colors for your calendar</mat-card-title>
+    <mat-card-content>
+      <mat-divider></mat-divider>
+      <form
+        [formGroup]="form"
+        (submit)="onSubmit()"
+      >
+
+
+        <mat-form-field>
+          <input matInput [ngxMatColorPicker]="picker" formControlName="color" type="text">
+          <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
+          <ngx-mat-color-picker #picker [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Text"
+            formControlName="text"
+          >
+        </mat-form-field>
+        <div>
+          <button
+            mat-button
+            type="button"
+            (click)="addLegendToArray()"
+            [disabled]="!form.get('color').value"
+          >
+            Add legend
+          </button>
+          <button
+            mat-button
+            type="submit"
+            [disabled]="form.invalid || legendsArray.length === 0"
+          >
+            Send to server
+          </button>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <div>
+    <mat-list class="container">
+
+      <mat-list-item *ngFor="let legend of legendsArray; let i = index">
+        <div>
+          <a
+            mat-icon-button
+            matTooltip="Delete legend?"
+            matTooltipPosition="below"
+            (click)="onDeleteLegend(i)"
+          >
+            <mat-icon mat-list-icon >delete_outline</mat-icon>
+          </a>
+        </div>
+
+        <div class="m2">
+          <div
+            class="preview-block"
+            [style]="{backgroundColor: legend.src}"
+          >
+          </div>
+        </div>
+        <div class="m2">
+          {{legend.text | shorterString }}
+        </div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+  </div>
+</div>

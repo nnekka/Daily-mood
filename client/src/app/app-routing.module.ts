@@ -9,6 +9,8 @@ import {AuthGuard} from "./shared/auth.guard";
 import {CalendarComponent} from "./components/main-block/calendar/calendar.component";
 import {CalendarFormComponent} from "./components/main-block/calendar/calendar-form/calendar-form.component";
 import {CalendarResolver} from "./components/main-block/calendar/calendar.resolver";
+import {ColorLegendFormComponent} from "./components/main-block/legends/color-legend-form/color-legend-form.component";
+import {ImageLegendFormComponent} from "./components/main-block/legends/image-legend-form/image-legend-form.component";
 
 const routes: Routes = [
   {
@@ -29,7 +31,9 @@ const routes: Routes = [
         resolve: {
           calendar: CalendarResolver
         }
-      }
+      },
+      { path: 'legends/color/:calendarId', component: ColorLegendFormComponent, pathMatch: 'full' },
+      { path: 'legends/image/:calendarId', component: ImageLegendFormComponent, pathMatch: 'full' },
     ]
   }
 ];

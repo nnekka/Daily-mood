@@ -41,8 +41,16 @@ const routes: Routes = [
           calendar: CalendarResolver
         }
       },
-      { path: 'legends/color/:calendarId', component: ColorLegendFormComponent, pathMatch: 'full' },
-      { path: 'legends/image/:calendarId', component: ImageLegendFormComponent, pathMatch: 'full' },
+      {
+        path: 'legends/color/:id',
+        component: ColorLegendFormComponent,
+        pathMatch: 'full',
+        resolve: {
+          calendar: CalendarResolver
+        }
+      },
+
+      { path: 'legends/image/:id', component: ImageLegendFormComponent, pathMatch: 'full' },
     ]
   }
 ];

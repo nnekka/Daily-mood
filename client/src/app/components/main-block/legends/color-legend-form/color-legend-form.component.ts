@@ -1,7 +1,8 @@
 import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CustomValidator} from "../../../../validators/custom.validator";
-import {Legend} from "../../../../shared/interfaces";
+import {Calendar, Legend} from "../../../../shared/interfaces";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-color-legend-form',
@@ -12,26 +13,34 @@ export class ColorLegendFormComponent implements OnInit {
 
   legendsArray: Legend[] = [];
   form: FormGroup;
+  calendar: Calendar;
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.initForm();
+    this.route.data.subscribe(
+      (data) => {
+        this.calendar = data.calendar;
+      }
+    )
   }
 
   private initForm() {
     this.form = new FormGroup({
-      color: new FormControl(null, Validators.required),
+      src: new FormControl(null, Validators.required),
       text: new FormControl('', Validators.required)
     })
   }
 
   onSubmit(){
-    console.log(`#${this.form.value.color.hex}`);
+    console.log(`#${this.form.value.src.hex}`);
   }
 
   addLegendToArray() {
-    const src = `#${this.form.value.color.hex}`;
+    const src = `#${this.form.value.src.hex}`;
     const text = this.form.value.text;
     const existLegend = this.legendsArray.find(p => p.src === src || p.text === text);
     if (!existLegend){

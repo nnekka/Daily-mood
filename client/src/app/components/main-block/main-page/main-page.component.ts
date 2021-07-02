@@ -17,20 +17,7 @@ export class MainPageComponent implements OnInit {
 
   @Input() deleteOrNot: boolean;
   calendars$: Observable<Calendar[]>;
-  folders = [
-    {
-      name: 'Photos',
-      updated: new Date('1/1/16'),
-    },
-    {
-      name: 'Recipes',
-      updated: new Date('1/17/16'),
-    },
-    {
-      name: 'Work',
-      updated: new Date('1/28/16'),
-    }
-  ];
+  remove = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -43,6 +30,7 @@ export class MainPageComponent implements OnInit {
   ngOnInit(): void {
     this.getParams();
     this.getCalendars();
+
   }
 
   private getParams(){
@@ -69,5 +57,7 @@ export class MainPageComponent implements OnInit {
           }
         )
     }
-  }
+    //this.dialog.open(ConfirmComponent)
+
+   }
 }

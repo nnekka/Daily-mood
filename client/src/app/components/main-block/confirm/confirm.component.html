@@ -1,2 +1,10 @@
-<div>Are you sure?</div>
-<button (click)="onCloseDialog()">Ok</button>
+<div class="backdrop"></div>
+
+<div class="modal">
+
+  <p>Точно хотите удалить?</p>
+
+
+  <button class="btn" (click)="onYes()">Yes</button>
+  <button class="btn" (click)="onCloseDialog()">Close</button>
+</div>

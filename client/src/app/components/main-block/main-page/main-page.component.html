@@ -1,3 +1,5 @@
+<app-confirm *ngIf="remove"></app-confirm>
+
 <div *ngIf="calendars$ | async as calendars; else loader">
   <div *ngIf="calendars.length > 0; else empty">
     <mat-list class="container">

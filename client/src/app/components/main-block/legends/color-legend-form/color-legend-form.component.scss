@@ -1,6 +1,6 @@
 
 mat-card {
-  width: 70%;
+  width: 80%;
   margin: 10px auto;
 }
 
@@ -13,7 +13,8 @@ mat-form-field {
 }
 
 mat-list {
-  width: 70%;
+  width: 90%;
+  text-align: center;
 }
 
 .colors-block {
@@ -27,3 +28,15 @@ mat-list {
   height: 2rem;
 }
 
+.main-block {
+  display: grid;
+  grid-template-columns: 70% 30%;
+}
+
+.form-block{
+
+}
+
+.legend-block {
+
+}

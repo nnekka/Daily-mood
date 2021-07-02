@@ -2,7 +2,8 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {AuthService} from "../../../components/auth-block/auth.service";
-import {User} from "../../interfaces";
+import {Calendar, User} from "../../interfaces";
+import {CalendarService} from "../../services/calendar.service";
 
 @Component({
   selector: 'app-main-layout',
@@ -14,15 +15,26 @@ export class MainLayoutComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
 
   user: User;
+  calendars: Calendar[];
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private calendarService: CalendarService
   ) { }
 
   ngOnInit(): void {
     this.getLoggedUser();
+    this.getCalendars()
   }
 
+
+  private getCalendars(){
+    this.calendarService.calendarsSubject.subscribe(
+      (calendars: Calendar[]) => {
+        this.calendars = calendars;
+      }
+    )
+  }
   toggleSidebar() {
     this.sidenav.toggle();
   }

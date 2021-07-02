@@ -4,11 +4,16 @@ import {Router} from "@angular/router";
 import {MaterialService} from "../material.service";
 import {Observable} from "rxjs/internal/Observable";
 import {Calendar} from "../interfaces";
+import {tap} from "rxjs/operators";
+import {BehaviorSubject} from "rxjs/internal/BehaviorSubject";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CalendarService {
+
+  calendarsSubject: BehaviorSubject<Calendar[]> = new BehaviorSubject<Calendar[]>([])
+  calendars: Calendar[];
 
   constructor(
     private http: HttpClient,
@@ -18,6 +23,14 @@ export class CalendarService {
 
   fetch(): Observable<Calendar[]>{
     return this.http.get<Calendar[]>('/api/calendars')
+      .pipe(
+        tap(
+          (calendars: Calendar[]) => {
+            this.calendars = calendars;
+            this.calendarsSubject.next(this.calendars);
+          }
+        )
+      )
   }
 
   fetchTitles(): Observable<string[]>{

@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.route('/').get(getTokenFromRequest, calendarController.getCalendars);
 router.route('/:id').get(getTokenFromRequest, calendarController.getCalendarById);
+router.route('/:id').delete(getTokenFromRequest, calendarController.removeCalendar);
 router.route('/:id').put([
     check('title', 'Title is required!').not().isEmpty()
 ], getTokenFromRequest, calendarController.updateCalendar);

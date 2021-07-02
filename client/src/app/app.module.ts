@@ -24,6 +24,7 @@ import { ColorLegendFormComponent } from './components/main-block/legends/color-
 import { ImageLegendFormComponent } from './components/main-block/legends/image-legend-form/image-legend-form.component';
 import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } from '@angular-material-components/color-picker';
 import {LengthPipe} from "./pipes/length.pipe";
+import { ConfirmComponent } from './components/main-block/confirm/confirm.component';
 const INTERCEPT_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
   useClass: AuthInterceptor,
@@ -55,7 +56,8 @@ const COLOR_PICKER_PROVIDER: Provider = {
     LegendsComponent,
     ColorLegendFormComponent,
     ImageLegendFormComponent,
-    LengthPipe
+    LengthPipe,
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,

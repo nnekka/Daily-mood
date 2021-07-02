@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from "@angular/router";
 import {MaterialService} from "../../../shared/material.service";
 import {AuthService} from "../../auth-block/auth.service";
 import {Calendar} from "../../../shared/interfaces";
 import {CalendarService} from "../../../shared/services/calendar.service";
 import {Observable} from "rxjs/internal/Observable";
+import {MatDialog} from "@angular/material/dialog";
+import {ConfirmComponent} from "../confirm/confirm.component";
 
 @Component({
   selector: 'app-main-page',
@@ -13,6 +15,7 @@ import {Observable} from "rxjs/internal/Observable";
 })
 export class MainPageComponent implements OnInit {
 
+  @Input() deleteOrNot: boolean;
   calendars$: Observable<Calendar[]>;
   folders = [
     {
@@ -34,6 +37,7 @@ export class MainPageComponent implements OnInit {
     private material: MaterialService,
     private authService: AuthService,
     private calendarService: CalendarService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -53,5 +57,17 @@ export class MainPageComponent implements OnInit {
 
   getCalendars(){
     this.calendars$ = this.calendarService.fetch()
+  }
+
+  onDelete(id: string) {
+
+    if (window.confirm('Are you sure')){
+      this.calendarService.removeCalendar(id)
+        .subscribe(
+          (response) => {
+            this.material.showMessage(response.message);
+          }
+        )
+    }
   }
 }

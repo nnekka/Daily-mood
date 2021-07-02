@@ -1,5 +1,7 @@
+
 const User = require('../models/User.js');
 const Calendar = require('../models/Calendar');
+const Day = require('../models/Day');
 const {validationResult} = require('express-validator');
 const {
     error500Handler,
@@ -58,18 +60,17 @@ module.exports.createCalendar = async (req, res) => {
 }
 
 
-// module.exports.removeCalendar = async (req, res) => {
-//     try {
-//         const calendar = await Calendar.findOne({
-//             user: req.user.id,
-//             _id: req.params.id
-//         });
-//         res.json(calendar);
-//     }
-//     catch (e) {
-//         error500Handler(res, e);
-//     }
-// }
+module.exports.removeCalendar = async (req, res) => {
+    try {
+
+        await Calendar.findByIdAndRemove(req.params.id);
+        await Day.deleteMany({ calendar: req.params.id })
+        res.json({ message: 'Calendar has been removed' });
+    }
+    catch (e) {
+        error500Handler(res, e);
+    }
+}
 
 module.exports.updateCalendar = async (req, res) => {
     const errors = validationResult(req);

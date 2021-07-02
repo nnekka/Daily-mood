@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CalendarService} from "../../../../shared/services/calendar.service";
 import {debounceTime, distinctUntilChanged, map, switchMap} from "rxjs/operators";
@@ -6,7 +6,7 @@ import {Subscription} from "rxjs/internal/Subscription";
 import {MaterialService} from "../../../../shared/material.service";
 import {CustomValidator} from "../../../../validators/custom.validator";
 import {Calendar} from "../../../../shared/interfaces";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 
 
@@ -19,6 +19,8 @@ export class CalendarFormComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
   unSub: Subscription;
+  calendar: Calendar;
+  editMode = false;
 
 
   types = [
@@ -35,13 +37,34 @@ export class CalendarFormComponent implements OnInit, OnDestroy {
   constructor(
     private calendarService: CalendarService,
     private material: MaterialService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
   }
 
   ngOnInit(): void {
     this.initForm();
-    this.validateTitle();
+
+    this.route.data.subscribe(
+      (data) => {
+        if (data.calendar){
+          this.editMode = true;
+          console.log(this.editMode)
+          this.calendar = data.calendar;
+          this.form.setValue({
+            title: this.calendar.title,
+            description: this.calendar.description,
+            year: this.calendar.year,
+            legendType: this.calendar.legendType
+          })
+
+        }
+      }
+    )
+
+    if (!this.editMode){
+      this.validateTitle();
+    }
   }
 
   ngOnDestroy(): void {
@@ -49,6 +72,7 @@ export class CalendarFormComponent implements OnInit, OnDestroy {
       this.unSub.unsubscribe();
     }
   }
+
 
   private initForm() {
     this.form = new FormGroup({
@@ -61,17 +85,29 @@ export class CalendarFormComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.form.disable();
-    this.unSub = this.calendarService.createCalendar(this.form.value)
-      .subscribe(
-        (calendar: Calendar) => {
-          this.router.navigate(['/main-page']);
-        },
-        error => {
-          this.material.showMessage(error.error.errors[0].msg);
-          this.form.enable();
-        }
+    let obs$;
+    const calendar = {
+      title: this.form.value.title,
+      description: this.form.value.description,
+      year: this.form.value.year
+    }
+    if (this.editMode){
+      obs$ = this.calendarService.updateCalendar(calendar, this.calendar._id)
+    } else {
+      obs$ = this.calendarService.createCalendar(this.form.value)
+    }
 
-      )
+    this.unSub = obs$.subscribe(
+      (calendar: Calendar) => {
+        this.router.navigate(['/main-page']);
+      },
+      error => {
+        this.material.showMessage(error.error.errors[0].msg);
+        this.form.enable();
+      }
+
+    )
+
   }
 
   onChangeRadio(type: string) {
@@ -82,22 +118,23 @@ export class CalendarFormComponent implements OnInit, OnDestroy {
 
   //попытка в асинхронную валидацию :)
   private validateTitle() {
-    this.form.valueChanges
-      .pipe(
-        //.takeUntil(this.ngUnsubscribe)        // отписка после разрушения
-        map(form => form['title']),
-        distinctUntilChanged(),                 // брать измененные данные
-        debounceTime(300),              // отсрочим
-        switchMap(() => {
-          return this.calendarService.fetchTitles()
-        })
-      )
-      .subscribe(titles => {
-        if (titles.includes(this.form.get('title').value)) {
-          this.material.showMessage(`Title "${this.form.get('title').value}" is already taken. Choose another one.`)
-          this.form.get('title').setErrors({exist: true})
-        }
-      });
-  }
+
+      this.form.valueChanges
+        .pipe(
+          //.takeUntil(this.ngUnsubscribe)        // отписка после разрушения
+          map(form => form['title']),
+          distinctUntilChanged(),                 // брать измененные данные
+          debounceTime(300),              // отсрочим
+          switchMap(() => {
+            return this.calendarService.fetchTitles()
+          })
+        )
+        .subscribe(titles => {
+          if (titles.includes(this.form.get('title').value)) {
+            this.material.showMessage(`Title "${this.form.get('title').value}" is already taken. Choose another one.`)
+            this.form.get('title').setErrors({exist: true})
+          }
+        });
+    }
 
 }

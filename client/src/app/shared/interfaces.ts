@@ -8,12 +8,12 @@ export interface User {
 }
 
 export interface Calendar {
-  id?: string;
+  _id?: string;
   days?: Day[];
   year: number;
   title: string;
   description?: string;
-  legendType: LegendType;
+  legendType?: LegendType;
   user?: string;
   legends?: Legend[];
   createdAt?: Date;

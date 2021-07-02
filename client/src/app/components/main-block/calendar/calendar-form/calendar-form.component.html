@@ -7,7 +7,7 @@
         [formGroup]="form"
         (submit)="onSubmit()"
       >
-        <mat-card-title>Создание календаря</mat-card-title>
+        <mat-card-title>{{editMode ? 'Обновление' : 'Создание'}} календаря</mat-card-title>
 
         <mat-card-content>
 
@@ -48,7 +48,7 @@
 
           </p>
 
-          <p>
+          <p *ngIf="!editMode">
             <mat-radio-group>
               <label class="text-center">Тип легенды:</label>
               <mat-radio-button
@@ -69,7 +69,7 @@
             type="submit"
             [disabled]="form.invalid"
           >
-            Create
+            {{editMode ? 'Update' : 'Create'}}
           </button>
         </mat-card-actions>
       </form>

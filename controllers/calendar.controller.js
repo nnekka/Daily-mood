@@ -78,6 +78,10 @@ module.exports.updateCalendar = async (req, res) => {
     }
     try {
         const { title, description, year } = req.body
+        const exist = await Calendar.findOne({ title });
+        if (exist){
+            return error400Message(res, `Calendar with title ${title} is already exists`)
+        }
         const calendar = await Calendar.findOne({
             _id: req.params.id
         })

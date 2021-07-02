@@ -22,11 +22,20 @@ const routes: Routes = [
   },
   {
     path: '', component: MainLayoutComponent, canActivate: [AuthGuard], children: [
-      { path: 'main-page', component: MainPageComponent },
+      { path: 'main-page', component: MainPageComponent, pathMatch: 'full' },
       { path: 'calendar/new', component: CalendarFormComponent, pathMatch: 'full' },
+
       {
         path: 'calendar/:id',
         component: CalendarComponent,
+        pathMatch: 'full',
+        resolve: {
+          calendar: CalendarResolver
+        }
+      },
+      {
+        path: 'calendar/edit/:id',
+        component: CalendarFormComponent,
         pathMatch: 'full',
         resolve: {
           calendar: CalendarResolver
